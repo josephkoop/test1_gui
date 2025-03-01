@@ -7,16 +7,17 @@ const tasksFile = path.join(process.cwd(), 'tasks.json');
 const router = express.Router();
 
 let tasks = [];
+let sort = 'id';
 
 fs.readFile(tasksFile, 'utf8', (err, data) => {
     if(err){
         tasks = [
-            {id: 1, title: 'Class Design', description: 'Design all classes that will be used in the project.', completed: 1},     //('task_id', 'title', 'description', 'completed')
-            {id: 2, title: 'Database Design', description: 'Design the database for the project.', completed: 1}, 
-            {id: 3, title: 'UI Design', description: 'Design the front-end for the project.', completed: 1}, 
-            {id: 4, title: 'Coding', description: 'Code the classes, front-end, and database.', completed: 0}, 
-            {id: 5, title: 'Implement Authorization', description: 'Figure out what authorazation to use and implement it.', completed: 0}, 
-            {id: 6, title: 'Test the project', description: 'Make sure everything functions as intended.', completed: 0}, 
+            {id: 1, title: 'Class Design', description: 'Design all classes that will be used in the project.', priority: 1, completed: 1},     //('task_id', 'title', 'description', 'completed')
+            {id: 2, title: 'Database Design', description: 'Design the database for the project.', priority: 2, completed: 1}, 
+            {id: 3, title: 'UI Design', description: 'Design the front-end for the project.', priority: 2, completed: 1}, 
+            {id: 4, title: 'Coding', description: 'Code the classes, front-end, and database.', priority: 3, completed: 0}, 
+            {id: 5, title: 'Implement Authorization', description: 'Figure out what authorazation to use and implement it.', priority: 1, completed: 0}, 
+            {id: 6, title: 'Test the project', description: 'Make sure everything functions as intended.', priority: 3, completed: 0}, 
         ];
         return;
     }
@@ -26,19 +27,29 @@ fs.readFile(tasksFile, 'utf8', (err, data) => {
 let task_id = tasks.length > 0 ? Math.max(...tasks.map(task => task.id)) + 1 : 1;
 
 router.get('/', (req, res) => {
+
+    if(sort === 'pd'){
+        tasks.sort((a, b) => a.priority - b.priority);
+    }else if(sort === 'pa'){
+        tasks.sort((a, b) => b.priority - a.priority);
+    }else{
+        tasks.sort((a, b) => a.id - b.id);
+    }
+    
     res.render('home', {
-        tasks
+        tasks,
+        selectedSort: sort
     });
 });
 
 router.post('/add-task', (req, res) => {
-    const { title, description } = req.body;
+    const { title, description, priority } = req.body;
 
-    if(!title || !description){
-        return res.status(400).send('Title and description are required');
+    if(!title || !description || !priority){
+        return res.status(400).send('Title, description, and priority are required');
     }
 
-    tasks.push({id: task_id++, title: title, description: description, completed: 0})
+    tasks.push({id: task_id++, title: title, description: description, priority: priority, completed: 0})
     
     fs.writeFile(tasksFile, JSON.stringify(tasks, null, 2), (err) => {
         if(err){
@@ -77,6 +88,12 @@ router.get('/delete-task/:id', (req, res) => {
         }
         res.redirect('/');
     });
+});
+
+router.get('/sort', (req, res) => {
+    sort = req.query.sort || 'id';
+
+    res.redirect('/');
 });
 
 export default router;
