@@ -8,6 +8,7 @@ const router = express.Router();
 
 let tasks = [];
 let sort = 'id';
+let filter = 2;
 
 fs.readFile(tasksFile, 'utf8', (err, data) => {
     if(err){
@@ -38,7 +39,8 @@ router.get('/', (req, res) => {
     
     res.render('home', {
         tasks,
-        selectedSort: sort
+        selectedSort: sort,
+        selectedFilter: filter
     });
 });
 
@@ -92,6 +94,12 @@ router.get('/delete-task/:id', (req, res) => {
 
 router.get('/sort', (req, res) => {
     sort = req.query.sort || 'id';
+
+    res.redirect('/');
+});
+
+router.get('/filter', (req, res) => {
+    filter = parseInt(req.query.filter, 10);
 
     res.redirect('/');
 });

@@ -32,6 +32,7 @@ body{
 
 .button{
     height: 3rem;
+    width: 6rem;
     padding: 0 1rem;
     background-color: var(--contrast);
     border-radius: 20px;
@@ -43,10 +44,15 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 70%;
     background-color: var(--contrast);
     border-radius: 20px;
     border: 3px solid var(--highlight1);
+}
+
+.control-buttons{
+    width: 100%;
+    display: flex;
+    justify-content: right;
 }
 
 .button:hover, .button-center button{
@@ -82,7 +88,7 @@ body{
 
 .task-list-inner-block{
     background-color: var(--highlight3);
-    width: 50%;
+    width: 90%;
 }
 
 h1{
@@ -149,7 +155,20 @@ img:hover{
 }
 
 .command-header{
-    display: grid;
+    display: flex;
     width: 100%;
-    grid-template-columns: 1fr 1fr;
+}
+
+@media screen and (max-width: 900px) {
+    .command-header{
+        flex-direction: column;
+    }
+
+    .control-buttons{
+        flex-direction: column;
+    }
+
+    .sort-form{
+        margin: 0 2rem 1rem !important;
+    }
 }
