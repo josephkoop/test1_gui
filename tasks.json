@@ -18,14 +18,14 @@
     "title": "Implementation",
     "description": "x",
     "priority": 2,
-    "completed": 1
+    "completed": 0
   },
   {
     "id": 6,
     "title": "Testing",
     "description": "x",
     "priority": 2,
-    "completed": 1
+    "completed": 0
   },
   {
     "id": 7,

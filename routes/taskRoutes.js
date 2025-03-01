@@ -9,11 +9,12 @@ const router = express.Router();
 let tasks = [];
 let sort = 'id';
 let filter = 2;
+let search = '';
 
 fs.readFile(tasksFile, 'utf8', (err, data) => {
     if(err){
         tasks = [
-            {id: 1, title: 'Class Design', description: 'Design all classes that will be used in the project.', priority: 1, completed: 1},     //('task_id', 'title', 'description', 'completed')
+            {id: 1, title: 'Class Design', description: 'Design all classes that will be used in the project.', priority: 1, completed: 1},
             {id: 2, title: 'Database Design', description: 'Design the database for the project.', priority: 2, completed: 1}, 
             {id: 3, title: 'UI Design', description: 'Design the front-end for the project.', priority: 2, completed: 1}, 
             {id: 4, title: 'Coding', description: 'Code the classes, front-end, and database.', priority: 3, completed: 0}, 
@@ -40,7 +41,8 @@ router.get('/', (req, res) => {
     res.render('home', {
         tasks,
         selectedSort: sort,
-        selectedFilter: filter
+        selectedFilter: filter,
+        selectedSearch: ''
     });
 });
 
@@ -102,6 +104,25 @@ router.get('/filter', (req, res) => {
     filter = parseInt(req.query.filter, 10);
 
     res.redirect('/');
+});
+
+router.get('/search', (req, res) => {
+    search = req.query.search || '';
+
+    if(sort === 'pd'){
+        tasks.sort((a, b) => a.priority - b.priority);
+    }else if(sort === 'pa'){
+        tasks.sort((a, b) => b.priority - a.priority);
+    }else{
+        tasks.sort((a, b) => a.id - b.id);
+    }
+    
+    res.render('home', {
+        tasks,
+        selectedSort: sort,
+        selectedFilter: filter,
+        selectedSearch: search
+    });
 });
 
 export default router;

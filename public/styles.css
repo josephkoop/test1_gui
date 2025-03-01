@@ -39,7 +39,7 @@ body{
     border: 3px solid var(--highlight1);
 }
 
-.sort-form{
+.control-form{
     height: 3rem;
     display: flex;
     justify-content: center;
@@ -88,7 +88,7 @@ body{
 
 .task-list-inner-block{
     background-color: var(--highlight3);
-    width: 90%;
+    width: calc(100vw - 4rem);
 }
 
 h1{
@@ -136,6 +136,7 @@ form input, form select{
 
 .button-center button{
     background-color: var(--contrast);
+    padding: 5px;
 }
 
 img{
@@ -159,6 +160,22 @@ img:hover{
     width: 100%;
 }
 
+.highlight{
+    color: yellow;
+    font-weight: bold;
+}
+
+.search-button{
+    background-color: var(--highlight1);
+    color: white;
+    margin-right: 1rem;
+    padding: 5px;
+}
+
+.search-button:hover{
+    cursor: pointer;
+}
+
 @media screen and (max-width: 900px) {
     .command-header{
         flex-direction: column;
@@ -168,7 +185,7 @@ img:hover{
         flex-direction: column;
     }
 
-    .sort-form{
+    .control-form{
         margin: 0 2rem 1rem !important;
     }
 }
