@@ -1,3 +1,5 @@
+<!-- home.ejs -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,8 +15,10 @@
         <div class="task-list-inner-block bp">
             <div class="command-header">
                 <div>
+                    <!-- Button to toggle the Add Task form -->
                     <button class="bm button" onclick="toggleAddForm()">Add New</button>
                     <div id="add-form" class="add-form hide">
+                        <!-- Form to add a new task -->
                         <form action="/add-task" method="POST">
                             <div class="label-input">
                                 <label for="title">Title: </label>
@@ -39,6 +43,7 @@
                 </div>
                 <div class="control-buttons">
                     <div>
+                        <!-- Sorting form -->
                         <form class="bm control-form" id="sort-form" action="/sort">
                             <label for="sort">Sort By</label>
                             <select name="sort" onchange="document.getElementById('sort-form').submit();">
@@ -49,6 +54,7 @@
                         </form>
                     </div>
                     <div>
+                        <!-- Filtering form -->
                         <form class="bm control-form" id="filter-form" action="/filter">
                             <label for="filter">Filter By</label>
                             <select name="filter" onchange="document.getElementById('filter-form').submit();">
@@ -59,6 +65,7 @@
                         </form>
                     </div>
                     <div>
+                        <!-- Search form -->
                         <form class="bm control-form" id="search-form" action="/search">
                             <label for="search">Search for title</label>
                             <input type="text" name="search" value="<%= selectedSearch %>"/>
@@ -68,8 +75,7 @@
                 </div>
             </div>
 
-
-
+            <!-- Table headers for the task list -->
             <div class="task-heading">
                 <p class="column-name">ID</p>
                 <p class="column-name">Title</p>
@@ -79,26 +85,34 @@
                 <img class="column-name" src="complete.png"/>
                 <img class="column-name" src="delete.png"/>
             </div>
+            
+            <!-- Loop through tasks and display them -->
             <% tasks.forEach(task => { %>
                 <div class="task-info 
                 <%= task.completed ? 'strike' : '' %> 
-                <%= selectedFilter !== 2 && selectedFilter !== task.completed ? 'hide' : '' %> 
-                <%= task.title.toLowerCase().includes(selectedSearch.toLowerCase()) && selectedSearch !== '' ? 'highlight' : '' %>">
+                <%= (selectedFilter !== 2 && selectedFilter !== task.completed) ? 'hide' : '' %> 
+                <%= (task.title.toLowerCase().includes(selectedSearch.toLowerCase()) && selectedSearch !== '') ? 'highlight' : '' %>">
                     <p><%= task.id %></p>
                     <p><%= task.title %></p>
                     <p><%= task.description %></p>
-                    <% if(task.priority === 1) { %>
+                    
+                    <!-- Display priority level based on task priority value -->
+                    <% if(task.priority == 1) { %>
                         <p>High</p>
-                    <% } else if(task.priority === 2) { %> 
+                    <% } else if(task.priority == 2) { %> 
                         <p>Medium</p>
                     <% } else { %>
                         <p>Low</p>
                     <% } %>
+                    
+                    <!-- Display task status -->
                     <% if(task.completed) { %>
                         <p>Completed</p>
                     <% } else { %> 
                         <p>Pending</p>
                     <% } %>
+                    
+                    <!-- Action buttons to toggle task completion and delete task -->
                     <a class="tr" href="/toggle-task/<%= task.id %>"><img src="complete.png" alt="Checkmark Icon"></a>
                     <a class="tr" href="/delete-task/<%= task.id %>"><img src="delete.png" alt="Delete Icon"></a>
                 </div>
@@ -107,6 +121,7 @@
     </div>
 
     <script>
+        // Function to toggle the visibility of the Add Task form
         function toggleAddForm(){
             document.getElementById("add-form").classList.toggle("hide");
         }

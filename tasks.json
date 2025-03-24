@@ -1,37 +1,58 @@
 [
   {
+    "id": 1,
+    "title": "Planning",
+    "description": " ",
+    "priority": "3",
+    "completed": 1
+  },
+  {
+    "id": 2,
+    "title": "Analysis",
+    "description": "Gather data",
+    "priority": "2",
+    "completed": 1
+  },
+  {
     "id": 3,
     "title": "Design",
-    "description": "x",
-    "priority": 1,
+    "description": "Design database, front-end, and middeware",
+    "priority": "1",
     "completed": 0
   },
   {
     "id": 4,
-    "title": "Coding",
-    "description": "x",
-    "priority": 1,
+    "title": "Coding-1",
+    "description": "Front End",
+    "priority": "3",
     "completed": 0
   },
   {
     "id": 5,
-    "title": "Implementation",
-    "description": "x",
-    "priority": 2,
+    "title": "Coding-2",
+    "description": "Database",
+    "priority": "2",
     "completed": 0
   },
   {
     "id": 6,
-    "title": "Testing",
-    "description": "x",
-    "priority": 2,
-    "completed": 0
+    "title": "Coding-3",
+    "description": "Middleware",
+    "priority": "2",
+    "completed": 1
   },
   {
     "id": 7,
+    "title": "Testing",
+    "description": " ",
+    "priority": "1",
+    "completed": 1
+  },
+  {
+    "id": 8,
     "title": "Documentation",
-    "description": "x",
-    "priority": 3,
+    "description": "Write documentation",
+    "priority": "3",
     "completed": 1
   }
 ]

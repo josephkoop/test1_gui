@@ -1,3 +1,5 @@
+/* styles.css */
+
 :root{
     --background: black;
     --contrast: limegreen;
@@ -18,6 +20,9 @@ body{
     background-color: var(--background);
 }
 
+
+
+
 .bm{
     margin: 2rem;
 }
@@ -29,6 +34,27 @@ body{
 .bp2{
     padding: 1rem;
 }
+
+.strike{
+    text-decoration-line: line-through;
+}
+
+.hide{
+    display: none !important;
+}
+
+.tr{
+    text-align: right;
+}
+
+.highlight{
+    color: yellow;
+    font-weight: bold;
+}
+
+
+
+
 
 .button{
     height: 3rem;
@@ -53,15 +79,12 @@ body{
     width: 100%;
     display: flex;
     justify-content: right;
+    flex-wrap: wrap;
 }
 
 .button:hover, .button-center button{
     cursor: pointer;
     background-color: var(--hover1);
-}
-
-.strike{
-    text-decoration-line: line-through;
 }
 
 .task-info p{
@@ -99,10 +122,6 @@ h1{
     font-weight: bold;
     font-size: 1.5rem;
     margin-bottom: 2rem;
-}
-
-.hide{
-    display: none !important;
 }
 
 .add-form{
@@ -151,18 +170,8 @@ img:hover{
     opacity: 0.5;
 }
 
-.tr{
-    text-align: right;
-}
-
 .command-header{
     display: flex;
-    width: 100%;
-}
-
-.highlight{
-    color: yellow;
-    font-weight: bold;
 }
 
 .search-button{
@@ -174,18 +183,4 @@ img:hover{
 
 .search-button:hover{
     cursor: pointer;
-}
-
-@media screen and (max-width: 900px) {
-    .command-header{
-        flex-direction: column;
-    }
-
-    .control-buttons{
-        flex-direction: column;
-    }
-
-    .control-form{
-        margin: 0 2rem 1rem !important;
-    }
 }
