@@ -41,38 +41,6 @@
                         </form>
                     </div>
                 </div>
-                <div class="control-buttons">
-                    <div>
-                        <!-- Sorting form -->
-                        <form class="bm control-form" id="sort-form" action="/sort">
-                            <label for="sort">Sort By</label>
-                            <select name="sort" onchange="document.getElementById('sort-form').submit();">
-                                <option class="option" value="id" <%= selectedSort === 'id' ? 'selected' : '' %>>ID</option>
-                                <option class="option" value="pa" <%= selectedSort === 'pa' ? 'selected' : '' %>>Priority: Ascending</option>
-                                <option class="option" value="pd" <%= selectedSort === 'pd' ? 'selected' : '' %>>Priority: Descending</option>
-                            </select>
-                        </form>
-                    </div>
-                    <div>
-                        <!-- Filtering form -->
-                        <form class="bm control-form" id="filter-form" action="/filter">
-                            <label for="filter">Filter By</label>
-                            <select name="filter" onchange="document.getElementById('filter-form').submit();">
-                                <option class="option" value=2 <%= selectedFilter === 2 ? 'selected' : '' %>>All</option>
-                                <option class="option" value=1 <%= selectedFilter === 1 ? 'selected' : '' %>>Completed</option>
-                                <option class="option" value=0 <%= selectedFilter === 0 ? 'selected' : '' %>>Pending</option>
-                            </select>
-                        </form>
-                    </div>
-                    <div>
-                        <!-- Search form -->
-                        <form class="bm control-form" id="search-form" action="/search">
-                            <label for="search">Search for title</label>
-                            <input type="text" name="search" value="<%= selectedSearch %>"/>
-                            <button class="search-button" type="submit">Search</button>
-                        </form>
-                    </div>
-                </div>
             </div>
 
             <!-- Table headers for the task list -->
@@ -86,12 +54,9 @@
                 <img class="column-name" src="delete.png"/>
             </div>
             
-            <!-- Loop through tasks and display them -->
             <% tasks.forEach(task => { %>
                 <div class="task-info 
-                <%= task.completed ? 'strike' : '' %> 
-                <%= (selectedFilter !== 2 && selectedFilter !== task.completed) ? 'hide' : '' %> 
-                <%= (task.title.toLowerCase().includes(selectedSearch.toLowerCase()) && selectedSearch !== '') ? 'highlight' : '' %>">
+                <%= task.completed ? 'strike' : '' %>"> 
                     <p><%= task.id %></p>
                     <p><%= task.title %></p>
                     <p><%= task.description %></p>
@@ -113,8 +78,8 @@
                     <% } %>
                     
                     <!-- Action buttons to toggle task completion and delete task -->
-                    <a class="tr" href="/toggle-task/<%= task.id %>"><img src="complete.png" alt="Checkmark Icon"></a>
-                    <a class="tr" href="/delete-task/<%= task.id %>"><img src="delete.png" alt="Delete Icon"></a>
+                    <a class="tr hide" href="/toggle-task/<%= task.id %>"><img src="complete.png" alt="Checkmark Icon"></a>
+                    <a class="tr hide" href="/delete-task/<%= task.id %>"><img src="delete.png" alt="Delete Icon"></a>
                 </div>
             <% }); %>
         </div>
@@ -128,3 +93,4 @@
     </script>
 </body>
 </html>
+

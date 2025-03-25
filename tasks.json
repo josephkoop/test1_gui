@@ -11,7 +11,7 @@
     "title": "Analysis",
     "description": "Gather data",
     "priority": "2",
-    "completed": 1
+    "completed": 0
   },
   {
     "id": 3,
@@ -25,7 +25,7 @@
     "title": "Coding-1",
     "description": "Front End",
     "priority": "3",
-    "completed": 0
+    "completed": 1
   },
   {
     "id": 5,
