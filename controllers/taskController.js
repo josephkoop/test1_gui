@@ -28,23 +28,23 @@ export const addTask = async (req, res) => {
 
 
 
-// const updateTask = (req, res) => {
-//     const id = parseInt(req.params.id, 10);
-//     const taskIndex = tasks.findIndex(task => task.id === id);
+export const updateTask = async (req, res) => {
+    const id = parseInt(req.params.id, 10);
+    const taskIndex = tasks.findIndex(task => task.id === id);
 
-//     if(taskIndex !== -1){
-//         tasks[taskIndex].completed = tasks[taskIndex].completed ? 0 : 1;
+    if(taskIndex !== -1){
+        tasks[taskIndex].completed = tasks[taskIndex].completed ? 0 : 1;
 
-//         // Save updated tasks to file
-//         fs.writeFile(tasksFile, JSON.stringify(tasks, null, 2), (err) => {
-//             if(err){
-//                 console.error("Failed to update tasks.json:", err);
-//                 return res.status(500).send("Internal Server Error");
-//             }
-//             res.redirect('/');
-//         });
-//     }
-// }
+        // Save updated tasks to file
+        fs.writeFile(tasksFile, JSON.stringify(tasks, null, 2), (err) => {
+            if(err){
+                console.error("Failed to update tasks.json:", err);
+                return res.status(500).send("Internal Server Error");
+            }
+            res.redirect('/');
+        });
+    }
+}
 
 // const deleteTask = (req, res) => {
 //     const id = parseInt(req.params.id, 10);

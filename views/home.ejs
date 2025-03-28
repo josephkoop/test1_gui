@@ -78,8 +78,8 @@
                     <% } %>
                     
                     <!-- Action buttons to toggle task completion and delete task -->
-                    <a class="tr hide" href="/toggle-task/<%= task.id %>"><img src="complete.png" alt="Checkmark Icon"></a>
-                    <a class="tr hide" href="/delete-task/<%= task.id %>"><img src="delete.png" alt="Delete Icon"></a>
+                    <a class="tr" href="/toggle-task/<%= task.id %>"><img src="complete.png" alt="Checkmark Icon"></a>
+                    <a class="tr" href="/delete-task/<%= task.id %>"><img src="delete.png" alt="Delete Icon"></a>
                 </div>
             <% }); %>
         </div>
