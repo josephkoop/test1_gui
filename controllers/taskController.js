@@ -1,4 +1,4 @@
-import { viewTasks, addTaskDB } from "../models/taskModel.js";
+import { viewTasks, addTaskDB, toggleTaskDB, deleteTaskDB, editTaskDB } from "../models/taskModel.js";
 
 export const home = async (req, res) => {
     try{
@@ -20,45 +20,58 @@ export const addTask = async (req, res) => {
 
     try{
         const newTask = await addTaskDB(title, description, priority);
-        res.redirect('/');
+        res.json({ res: newTask });
     }catch(error){
-        res.status(500).send("An error occured while adding task.");
+        res.status(500).json({ err: "An error occured while adding task." });
     }
 };
 
+export const editTask = async (req, res) => {
+    const { id, title, description, priority } = req.body;
+    
+    if(!id) return res.status(400).send("Error: task not found");
 
+    if(!title || !priority){            // Ensure required fields are present
+        return res.status(400).send('Title and priority level are required.');
+    }
 
-export const updateTask = async (req, res) => {
+    try{
+        const editTask = await editTaskDB(id, title, description, priority);
+        res.json({ res: editTask });
+    }catch(error){
+        res.status(500).json({ err: "An error occured while editing task." });
+    }
+};
+
+export const toggleTask = async (req, res) => {
     const id = parseInt(req.params.id, 10);
-    const taskIndex = tasks.findIndex(task => task.id === id);
 
-    if(taskIndex !== -1){
-        tasks[taskIndex].completed = tasks[taskIndex].completed ? 0 : 1;
+    if(!id || isNaN(id)){
+        return res.status(400).json({ err: "Invalid or missing ID" });
+    }
 
-        // Save updated tasks to file
-        fs.writeFile(tasksFile, JSON.stringify(tasks, null, 2), (err) => {
-            if(err){
-                console.error("Failed to update tasks.json:", err);
-                return res.status(500).send("Internal Server Error");
-            }
-            res.redirect('/');
-        });
+    try{
+        const updatedTask = await toggleTaskDB(id);
+        res.json({ res: updatedTask });
+    }catch(error){
+        res.status(500).json({ err: "An error occured while updating task."});
     }
 }
 
-// const deleteTask = (req, res) => {
-//     const id = parseInt(req.params.id, 10);
-//     tasks = tasks.filter(task => task.id !== id);
+export const deleteTask = async (req, res) => {
+    const id = parseInt(req.params.id, 10);
 
-//     // Save updated tasks to file
-//     fs.writeFile(tasksFile, JSON.stringify(tasks, null, 2), (err) => {
-//         if(err){
-//             console.error("Failed to update tasks.json:", err);
-//             return res.status(500).send("Internal Server Error");
-//         }
-//         res.redirect('/');
-//     });
-// }
+    if(!id || isNaN(id)){
+        return res.status(400).json({ err: "Invalid or missing ID" });
+    }
+
+    try{
+        const deletedTask = await deleteTaskDB(id);
+        res.json({ res: deletedTask });
+    }catch(error){
+        res.status(500).json({ err: "An error occured while deleting task." });
+    }
+}
 
 
 

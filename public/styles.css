@@ -20,6 +20,11 @@ body{
     background-color: var(--background);
 }
 
+button:hover{
+    cursor: pointer;
+    border: 2px solid var(--highlight1);
+}
+
 
 
 
@@ -29,6 +34,10 @@ body{
 
 .bp{
     padding: 2rem;
+}
+
+.bm2{
+    margin: 1rem;
 }
 
 .bp2{
@@ -52,9 +61,21 @@ body{
     font-weight: bold;
 }
 
+.success{
+    background-color: green;
+}
+
+.error{
+    background-color: red;
+}
 
 
 
+
+.icon-link{
+    border: 0;
+    background-color: transparent;
+}
 
 .button{
     height: 3rem;
@@ -91,9 +112,14 @@ body{
     padding: 0.5rem;
 }
 
-.task-heading, .task-info{
+.task-heading{
     display: grid;
-    grid-template-columns: 1fr 2fr 4fr 2fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 2fr 4fr 2fr 2fr 2fr;
+}
+
+.task-info{
+    display: grid;
+    grid-template-columns: 1fr 2fr 4fr 2fr 1fr 1fr 1fr 1fr;
 }
 
 .task-heading{
@@ -124,11 +150,11 @@ h1{
     margin-bottom: 2rem;
 }
 
-.add-form{
+.add-form, .edit-form{
     margin-bottom: 2rem;
 }
 
-.add-form form{
+.add-form form, .edit-form form{
     max-width: 400px;
     border: 3px solid var(--highlight1);
     padding: 1rem;

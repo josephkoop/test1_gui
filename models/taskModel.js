@@ -2,7 +2,7 @@ import { query } from "../config/db.js";
 
 export const viewTasks = async () => {
     try{
-        const result = await query("SELECT id, title, description, priority, completed FROM tasks");
+        const result = await query("SELECT id, title, description, priority, completed FROM tasks ORDER BY id ASC");
         return result.rows;
     }catch(error){
         console.error("Error fetching tasks:", error);
@@ -23,6 +23,42 @@ export const addTaskDB = async (title, description, priority) => {
     }
 };
 
+export const editTaskDB = async (id, title, description, priority) => {
+    try{
+        const result = await query(
+            "UPDATE tasks SET title = $1, description = $2, priority = $3 WHERE id = $4 RETURNING *",
+            [title, description, priority, id]
+        );
+        return result.rows[0];
+    }catch(error){
+        console.error("Error editing task:", error);
+        throw error;
+    }
+};
+
+export const toggleTaskDB = async (task_id) => {
+    try{
+        const result = await query(
+            "UPDATE tasks SET completed = NOT completed WHERE id = $1 RETURNING *", [task_id]
+        );
+        return result.rows[0];
+    }catch(error){
+        console.error("Error updating task:", error);
+        throw error;
+    }
+};
+
+export const deleteTaskDB = async (task_id) => {
+    try{
+        const result = await query(
+            "DELETE FROM tasks WHERE id = $1 RETURNING *", [task_id]
+        );
+        return result.rows[0];
+    }catch(error){
+        console.error("Error deleting task:", error);
+        throw error;
+    }
+};
 
 
 
@@ -38,13 +74,3 @@ export const addTaskDB = async (title, description, priority) => {
 
 
 
-
-
-
-
-
-
-
-
-
-//let tasks = [];  // Array to store tasks

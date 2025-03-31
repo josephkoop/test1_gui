@@ -3,8 +3,11 @@
 import express from "express";
 import path from "path";
 import taskRoutes from './routes/taskRoutes.js'
+import csrf from 'csurf';
+import cookieParser from 'cookie-parser';
 
 const app = express();
+app.use(express.json());
 
 // Middleware to parse URL-encoded data (for form submissions)
 app.use(express.urlencoded({ extended: true }));

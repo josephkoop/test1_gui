@@ -1,17 +1,17 @@
 //taskRoutes.js
 
 import express, { Router } from 'express';
-import { home, addTask, updateTask } from '../controllers/taskController.js';
+import { home, addTask, toggleTask, deleteTask, editTask } from '../controllers/taskController.js';
 import path from 'path';
 import fs from 'fs';
 
 const router = express.Router();
 
-router.get('/', home);                      // Route for rendering the homepage with sorted tasks
-router.post('/add-task', addTask);          // Route to add a new task
-// router.put('/edit-task/:id', editTask()); // Route to delete a task
-router.patch('/toggle-task/:id', updateTask()); // Route to toggle task completion status
-// router.delete('/delete-task/:id', deleteTask()); // Route to delete a task
+router.get('/', home);                
+router.post('/add-task', addTask);      
+router.post('/edit-task/:id', editTask);          //should use put
+router.post('/toggle-task/:id', toggleTask);        //should use patch
+router.post('/delete-task/:id', deleteTask);        //should use delete
 
 export default router;
 
