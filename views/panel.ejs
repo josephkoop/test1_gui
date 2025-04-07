@@ -3,56 +3,86 @@
 <div class="task-list-inner-block bp">
     <div class="bm2" id="response-message"></div>
     <div class="command-header">
+        <!-- Button to toggle the Add Task form -->
+        <button class="bm button" onclick="openAddForm()">Add New</button>
+        <div class="control-buttons">
+            <div>
+                <!-- Sorting form -->
+                <form class="bm control-form" id="sort-form" action="/sort">
+                    <label for="sort">Sort By</label>
+                    <select name="sort" onchange="document.getElementById('sort-form').submit();">
+                        <option class="option" value="id" <%= selectedSort === 'id' ? 'selected' : '' %>>ID</option>
+                        <option class="option" value="pa" <%= selectedSort === 'pa' ? 'selected' : '' %>>Priority: Ascending</option>
+                        <option class="option" value="pd" <%= selectedSort === 'pd' ? 'selected' : '' %>>Priority: Descending</option>
+                    </select>
+                </form>
+            </div>
+            <div>
+                <!-- Filtering form -->
+                <form class="bm control-form" id="filter-form" action="/filter">
+                    <label for="filter">Filter By</label>
+                    <select name="filter" onchange="document.getElementById('filter-form').submit();">
+                        <option class="option" value=2 <%= selectedFilter === 2 ? 'selected' : '' %>>All</option>
+                        <option class="option" value=1 <%= selectedFilter === 1 ? 'selected' : '' %>>Completed</option>
+                        <option class="option" value=0 <%= selectedFilter === 0 ? 'selected' : '' %>>Pending</option>
+                    </select>
+                </form>
+            </div>
+            <div>
+                <!-- Search form -->
+                <form class="bm control-form" id="search-form" action="/search">
+                    <label for="search">Search for title</label>
+                    <input type="text" name="search" value="<%= selectedSearch %>"/>
+                    <button class="search-button" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
         <div>
-            <!-- Button to toggle the Add Task form -->
-            <button class="bm button" onclick="openAddForm()">Add New</button>
-            <div>
-                <!-- Form to add a new task -->
-                <form id="add-form" class="add-form hide">
-                    <div class="label-input">
-                        <label for="title">Title: </label>
-                        <input type="text" name="title" id="add-title"/>
+            <!-- Form to add a new task -->
+            <form id="add-form" class="add-form hide">
+                <div class="label-input">
+                    <label for="title">Title: </label>
+                    <input type="text" name="title" id="add-title"/>
 
-                        <label for="description">Description: </label>
-                        <input type="text" maxlength="100" name="description" id="add-description"/>
+                    <label for="description">Description: </label>
+                    <input type="text" maxlength="100" name="description" id="add-description"/>
 
-                        <label for="priority">Priority Level: </label>
-                        <select name="priority" id="add-priority">
-                            <option value=1>High</option>
-                            <option value=2 selected>Medium</option>
-                            <option value=3>Low</option>
-                        </select>
-                    </div>
-                    <div class="button-center">
-                        <button type="submit">Submit</button>
-                        <button type="button" onclick="closeForms()">Cancel</button>
-                    </div>
-                </form>
-            </div>
-            <div>
-                <!-- Form to edit a new task -->
-                <form id="edit-form" class="edit-form hide">
-                    <div class="label-input">
-                        <input id="edit-task-id" type="number" hidden/>
-                        <label for="title">Title: </label>
-                        <input type="text" name="title" id="edit-title"/>
+                    <label for="priority">Priority Level: </label>
+                    <select name="priority" id="add-priority">
+                        <option value=1>High</option>
+                        <option value=2 selected>Medium</option>
+                        <option value=3>Low</option>
+                    </select>
+                </div>
+                <div class="button-center">
+                    <button type="submit">Submit</button>
+                    <button type="button" onclick="closeForms()">Cancel</button>
+                </div>
+            </form>
+        </div>
+        <div>
+            <!-- Form to edit a new task -->
+            <form id="edit-form" class="edit-form hide">
+                <div class="label-input">
+                    <input id="edit-task-id" type="number" hidden/>
+                    <label for="title">Title: </label>
+                    <input type="text" name="title" id="edit-title"/>
 
-                        <label for="description">Description: </label>
-                        <input type="text" maxlength="100" name="description" id="edit-description"/>
+                    <label for="description">Description: </label>
+                    <input type="text" maxlength="100" name="description" id="edit-description"/>
 
-                        <label for="priority">Priority Level: </label>
-                        <select name="priority" id="edit-priority">
-                            <option value=1>High</option>
-                            <option value=2 selected>Medium</option>
-                            <option value=3>Low</option>
-                        </select>
-                    </div>
-                    <div class="button-center">
-                        <button type="submit">Submit</button>
-                        <button type="button" onclick="closeForms()">Cancel</button>
-                    </div>
-                </form>
-            </div>
+                    <label for="priority">Priority Level: </label>
+                    <select name="priority" id="edit-priority">
+                        <option value=1>High</option>
+                        <option value=2 selected>Medium</option>
+                        <option value=3>Low</option>
+                    </select>
+                </div>
+                <div class="button-center">
+                    <button type="submit">Submit</button>
+                    <button type="button" onclick="closeForms()">Cancel</button>
+                </div>
+            </form>
         </div>
     </div>
 
