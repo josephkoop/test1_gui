@@ -9,9 +9,9 @@ const router = express.Router();
 
 router.get('/', home);                
 router.post('/add-task', addTask);      
-router.post('/edit-task/:id', editTask);          //should use put
-router.post('/toggle-task/:id', toggleTask);        //should use patch
-router.post('/delete-task/:id', deleteTask);        //should use delete
+router.put('/edit-task/:id', editTask);  
+router.patch('/toggle-task/:id', toggleTask);
+router.delete('/delete-task/:id', deleteTask);
 
 export default router;
 

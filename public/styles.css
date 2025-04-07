@@ -72,6 +72,10 @@ button:hover{
 
 
 
+#response-message{
+    padding: 2px;
+}
+
 .icon-link{
     border: 0;
     background-color: transparent;
