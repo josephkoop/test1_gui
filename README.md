@@ -5,6 +5,12 @@ Joseph Koop
 GUI Programming
 April 11, 2024
 
+
+Video Link:
+
+   https://www.youtube.com/watch?v=yMab4KSo1GM&ab_channel=JOSEPHKYLEKOOP
+
+
 To run this app:
 
    1. Download this directory. 
