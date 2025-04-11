@@ -1,9 +1,9 @@
 <!-- README.md -->
 
-Task Management Web App
-Joseph Koop
-GUI Programming
-April 11, 2024
+Task Management Web App<br>
+Joseph Koop<br>
+GUI Programming<br>
+April 11, 2024<br>
 
 
 Video Link:
