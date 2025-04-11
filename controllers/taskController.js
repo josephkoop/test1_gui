@@ -1,4 +1,4 @@
-import { viewTasks, addTaskDB, toggleTaskDB, deleteTaskDB, editTaskDB } from "../models/taskModel.js";
+import { viewTasks, addTaskDB, toggleTaskDB, deleteTaskDB, editTaskDB, arrangeTaskDB } from "../models/taskModel.js";
 
 export const home = async (req, res) => {
     try{
@@ -14,7 +14,7 @@ export const home = async (req, res) => {
 export const addTask = async (req, res) => {
     const { title, description, priority } = req.body;
     
-    if(!title || !priority){            // Ensure required fields are present
+    if(!title || !priority){
         return res.status(400).send('Title and priority level are required.');
     }
 
@@ -23,9 +23,9 @@ export const addTask = async (req, res) => {
     }
 
     if(description.length > 500){
-        return res.status(400).send('Descriptions must not be longer thatn 500 characters.');
+        return res.status(400).send('Descriptions must not be longer than 500 characters.');
     }
-    
+
     try{
         const newTask = await addTaskDB(title, description, priority);
         res.json({ res: newTask });
@@ -42,7 +42,7 @@ export const editTask = async (req, res) => {
         return res.status(400).json({ err: "Invalid or missing ID" });
     }
 
-    if(!title || !priority){            // Ensure required fields are present
+    if(!title || !priority){ 
         return res.status(400).send('Title and priority level are required.');
     }
     
@@ -99,13 +99,15 @@ export const deleteTask = async (req, res) => {
     }
 }
 
-
-
-
-// if(sort === 'pd'){
-//     tasks.sort((a, b) => a.priority - b.priority);
-// }else if(sort === 'pa'){
-//     tasks.sort((a, b) => b.priority - a.priority);
-// }else{
-//     tasks.sort((a, b) => a.id - b.id);
-// }
+export const arrangeTask = async (req, res) => {
+    const {page = 1, sort = 'id', filter = 0, search = ""} = req.body;
+    try{
+        const {tasks, isLast} = await arrangeTaskDB(page, sort, filter, search);
+        res.json({ 
+            res: tasks,
+            last: isLast
+        });
+    }catch(error){
+        res.status(500).send("An error occured while fetching task list.")
+    }
+}

@@ -84,7 +84,51 @@ export const deleteTaskDB = async (task_id) => {
     }
 };
 
+export const arrangeTaskDB = async (page, sort, filter, search) => {
+    let column = 'id';
+    let order = 'ASC';
+    let status1 = true;
+    let status2 = false;
+    let limit = 5;
+    let offset = limit * (page - 1);
+    if(offset < 0 || offset % limit != 0){
+        offset = 0;
+    } 
 
+    if(sort == 'pa'){
+        column = 'priority';
+        order = 'DESC';
+    }else if(sort == 'pd'){
+        column = 'priority';
+    }
+
+    if(filter == 1){
+        status2 = true;
+    }else if(filter == 2){
+        status1 = false;
+    }
+
+    try{
+        let queryText = `SELECT * FROM tasks 
+            WHERE (completed = $1 OR completed = $2) 
+            AND title ILIKE $3 
+            ORDER BY ${column} ${order}
+            LIMIT ${limit} OFFSET ${offset}
+        `;
+        const result = await query(
+            queryText, [status1, status2, `%${search}%`]
+        );
+        const count = await query(
+            "SELECT COUNT(*) FROM tasks WHERE (completed = $1 OR completed = $2) AND title ILIKE $3", [status1, status2, `%${search}%`]
+        );
+        const finalCount = parseInt(count.rows[0].count, 10);
+        const isLast = finalCount <= (offset + result.rows.length);
+        return {tasks: result.rows, isLast: isLast};
+    }catch(error){
+        console.error("Error fetching tasks");
+        throw error;
+    }
+}
 
 
 

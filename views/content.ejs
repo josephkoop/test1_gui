@@ -7,43 +7,11 @@
     <p class="column-name">Description</p>
     <p class="column-name">Priority</p>
     <p class="column-name">Status</p>
-    <p class="column-name">Action</p>
+    <p class="column-name action-heading">Action</p>
 </div>
 
-<div id="task-container">
-    <% tasks.forEach(task => { %>
-        <div id="task-row-<%= task.id %>" class="task-info
-        <%= task.completed ? 'strike' : '' %>">
-            <p><%= task.id %></p>
-            <p><%= task.title %></p>
-            <p><%= task.description %></p>
-    
-            <!-- Display priority level based on task priority value -->
-            <% if(task.priority == 1) { %>
-                <p>High</p>
-            <% } else if(task.priority == 2) { %>
-                <p>Medium</p>
-            <% } else { %>
-                <p>Low</p>
-            <% } %>
-    
-            <!-- Display task status -->
-            <% if(task.completed) { %>
-                <p class="compen">Completed</p>
-            <% } else { %>
-                <p class="compen">Pending</p>
-            <% } %>
-    
-            <!-- Action buttons to toggle task completion and delete task -->
-            <form class="tr toggle-form" data-task-id="<%= task.id %>">
-                <button class="icon-link" type="submit"><span class="material-icons" style="color: #28a745;">check_circle</span></button>
-            </form>
-            <div class="tr">
-                <button data-task-id="<%= task.id %>" data-title="<%= task.title %>" data-description="<%= task.description %>" data-priority="<%= task.priority %>" class="icon-link" type="button" onclick="openEditForm(this)"><span class="material-icons" style="color: #ecd609;;">edit</span></button>
-            </div>
-            <form class="tr delete-form" data-task-id="<%= task.id %>">
-                <button class="icon-link" type="submit"><span class="material-icons" style="color: #ee0909;">delete</span></button>
-            </form>
-        </div>
-    <% }); %>
+<div id="task-container"></div>
+<div id="paginate-buttons">
+    <button class="button" id="previous">Previous</button>
+    <button class="button" id="next">Next</button>
 </div>

@@ -1,5 +1,61 @@
 //script.js
 
+let page = 1;
+let last = false;
+
+function controlFunction(page1){
+    //console.log("Paged changed to: ", page1);
+    sort1 = $('#sort').val();
+    filter1 = $('#filter').val();
+    search1 = $('#search').val();
+    const controls = {
+        page: page1,
+        sort: sort1, 
+        filter: filter1, 
+        search: search1
+    };
+    $.ajax({
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        data: JSON.stringify(controls),
+        format: "json",
+        url: "/arrange-task",
+        beforeSend(){},
+        success: function(data){
+            if(data.err){
+                console.err(data.err);
+                return;
+            }
+
+            $('#task-container').empty();
+            if(!data.res){
+                let emptyMessage = `<div><p>No matching records were found.</p></div>`;
+                $('#task-container').append(emptyMessage);
+            }else{
+                for(let i = 0; i < data.res.length; i++){
+                    task = data.res[i];
+                    last = data.last;
+                    $('#task-container')
+                        .append(compileTask(task.id, task.title, task.description, task.priority, task.completed));
+                }
+            }
+
+            closeForms();
+        },
+        error: function(xhr){
+            let errorMessage = `Error Code ${xhr.status}. `;
+                if(xhr.responseJSON && xhr.responseJSON.err){
+                    errorMessage += xhr.responseJSON.err;
+                }else if(xhr.responseText){
+                    errorMessage += xhr.responseText;
+                }
+            console.error(errorMessage);
+        }
+    });
+}
+
 function openAddForm(){
     $("#add-form").removeClass("hide");
     $("#edit-form").addClass("hide");
@@ -28,7 +84,7 @@ function openEditForm(button){
 function closeForms(){
     $("#add-form").addClass("hide");
     $("#edit-form").addClass("hide");
-    $("form input").each( function(){
+    $("form input:not(#search)").each( function(){
         $(this).val("");
     });
 }
@@ -73,8 +129,21 @@ function compileTask(id, title, description, priority, completed){
     return newTask;
 }
 
-$(document).ready(function(){  
+$(document).ready(function(){
+    controlFunction(page);
     $('#response-message').html("").removeClass('success').removeClass('error');
+
+    $('#next').click( function(){
+        if(!last){
+            controlFunction(page += 1);
+        }
+    });
+
+    $('#previous').click( function(){
+        if(page > 1){
+            controlFunction(page -= 1);
+        }
+    });
 
     $('#add-form').submit( function (e){
         e.preventDefault();
@@ -100,7 +169,7 @@ $(document).ready(function(){
                 $('#response-message').html(`Added Task ${data.res.title}`).addClass('success').removeClass('error');
                 let newTask = compileTask(data.res.id, data.res.title, data.res.description, data.res.priority, data.res.completed);
                 $(`#task-container`).append(newTask);
-                closeForms();
+                controlFunction();
             },
             error: function(xhr){
                 let errorMessage = `Error Code ${xhr.status}. `;
@@ -141,7 +210,7 @@ $(document).ready(function(){
                 $('#response-message').html(`Edited Task ${data.res.title}`).addClass('success').removeClass('error');
                 let newTask = compileTask(data.res.id, data.res.title, data.res.description, data.res.priority, data.res.completed);
                 $(`#task-row-${taskId}`).replaceWith(newTask);
-                closeForms();
+                controlFunction();
             },
             error: function(xhr){
                 let errorMessage = `Error Code ${xhr.status}. `;
@@ -175,7 +244,7 @@ $(document).ready(function(){
                 }
                 $('#response-message').html(`Deleted Task ${data.res.title}`).addClass('success').removeClass('error');
                 $(`#task-row-${taskId}`).remove();
-                closeForms();
+                controlFunction();
             },
             error: function(xhr){
                 let errorMessage = `Error Code ${xhr.status}. `;
@@ -213,7 +282,7 @@ $(document).ready(function(){
                     status = "Pending";
                 }
                 $(`#task-row-${taskId}`).toggleClass('strike').find('.compen').text(status);
-                closeForms();
+                controlFunction();
             },
             error: function(xhr) {
                 let errorMessage = `Error Code ${xhr.status}. `;

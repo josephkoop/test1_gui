@@ -1,3 +1,5 @@
+-- tables.sql
+
 drop table if exists tasks;
 
 create table tasks (

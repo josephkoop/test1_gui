@@ -83,7 +83,7 @@ button:hover{
 
 .button{
     height: 3rem;
-    width: 6rem;
+    width: 8rem;
     padding: 0 1rem;
     background-color: var(--contrast);
     border-radius: 20px;
@@ -118,12 +118,16 @@ button:hover{
 
 .task-heading{
     display: grid;
-    grid-template-columns: 1fr 2fr 4fr 2fr 2fr 2fr;
+    grid-template-columns: 1fr 2fr 4fr 2fr 1fr 150px;
 }
 
 .task-info{
     display: grid;
-    grid-template-columns: 1fr 2fr 4fr 2fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 2fr 4fr 2fr 1fr 50px 50px 50px;
+}
+
+.action-heading{
+    text-align: center;
 }
 
 .task-heading{
@@ -135,7 +139,7 @@ button:hover{
     display: flex;
     justify-content: center;
     max-width: calc(100vw - 4rem);
-    height: calc(100vh - 12rem);
+    min-height: calc(100vh - 12rem);
     background-color: var(--highlight1);
 }
 
@@ -213,4 +217,10 @@ img:hover{
 
 .search-button:hover{
     cursor: pointer;
+}
+
+#paginate-buttons{
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
 }
